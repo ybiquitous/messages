@@ -53,9 +53,7 @@ class DefaultMessageBuilder implements MessageBuilder {
 
         @Override
         public List<String> getFormats(String baseName) {
-            if (baseName == null) {
-                throw new NullPointerException("baseName is required");
-            }
+            Utils.notNull(baseName, "baseName");
             return FORMATS;
         }
 
