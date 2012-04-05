@@ -9,7 +9,7 @@ public final class MessageKey {
     private final MessageBuilder _builder;
 
     public MessageKey(String key, String resourceName) {
-        this(key, new DefaultMessageBuilder(resourceName));
+        this(key, DefaultMessageBuilder.create(resourceName));
     }
 
     public MessageKey(String key, MessageBuilder builder) {

@@ -11,14 +11,27 @@ import java.text.MessageFormat;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.PropertyResourceBundle;
 import java.util.ResourceBundle;
+import java.util.WeakHashMap;
 
 class DefaultMessageBuilder implements MessageBuilder {
 
+    private static final Map<String, DefaultMessageBuilder> CACHE = new WeakHashMap<String, DefaultMessageBuilder>();
+
+    public static DefaultMessageBuilder create(String baseName) {
+        DefaultMessageBuilder result = CACHE.get(baseName);
+        if (result == null) {
+            result = new DefaultMessageBuilder(baseName);
+            CACHE.put(baseName, result);
+        }
+        return result;
+    }
+
     private final String _baseName;
 
-    public DefaultMessageBuilder(String baseName) {
+    private DefaultMessageBuilder(String baseName) {
         this._baseName = Utils.notNull(baseName, "baseName");
     }
 
