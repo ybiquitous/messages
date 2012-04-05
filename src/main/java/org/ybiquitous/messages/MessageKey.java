@@ -18,7 +18,7 @@ public final class MessageKey {
     }
 
     public String get(Object... args) {
-        return get(Locale.getDefault(), args);
+        return get(MessageLocaleHolder.get(), args);
     }
 
     public String get(Locale locale, Object... args) {
