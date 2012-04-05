@@ -6,7 +6,7 @@ public final class MessageKey {
 
     private final String _key;
 
-    private final MessageBuilder _builder;
+    private transient final MessageBuilder _builder;
 
     public MessageKey(String key, String resourceName) {
         this(key, DefaultMessageBuilder.create(resourceName));
