@@ -9,12 +9,15 @@ public class MessageKeyTest {
 
     @Test
     public void simple() {
-        MessageKey test_key = new MessageKey("test.key");
+        MessageKey test_key = newMessageKey("test.key");
         assertThat(test_key.get(1, 2, "三"), is("1 足す 2 は 三"));
 
-        MessageKey test_key1 = new MessageKey("test.key1");
-        MessageKey test_key2 = new MessageKey("test.key2");
+        MessageKey test_key1 = newMessageKey("test.key1");
+        MessageKey test_key2 = newMessageKey("test.key2");
         assertThat(test_key2.get(test_key1), is("'aaa' from other key"));
     }
 
+    private MessageKey newMessageKey(String key) {
+        return new MessageKey(key, "messages");
+    }
 }

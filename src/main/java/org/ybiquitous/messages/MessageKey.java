@@ -8,8 +8,8 @@ public final class MessageKey {
 
     private final MessageBuilder _builder;
 
-    public MessageKey(String key) {
-        this(key, new DefaultMessageBuilder("messages"));
+    public MessageKey(String key, String resourceName) {
+        this(key, new DefaultMessageBuilder(resourceName));
     }
 
     public MessageKey(String key, MessageBuilder builder) {
