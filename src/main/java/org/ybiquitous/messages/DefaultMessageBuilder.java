@@ -39,11 +39,13 @@ class DefaultMessageBuilder implements MessageBuilder {
 
     private String _build(Locale locale, String key, Object... args) {
         final String base = ResourceBundle.getBundle(this._baseName, locale,
-                new CustomControl()).getString(key);
+                CustomControl.INSTANCE).getString(key);
         return new MessageFormat(base, locale).format(args);
     }
 
     private static class CustomControl extends ResourceBundle.Control {
+
+        public static final CustomControl INSTANCE = new CustomControl();
 
         private static final List<String> FORMATS = Arrays.asList("properties");
 
