@@ -9,7 +9,7 @@ _Java_
 
     import org.ybiquitous.messages.*;
 
-    new MessageKey("test.key1", "messages").get(1, "abc");  //=> 1 and abc
+    new MessageKey("test.key", "messages").get(1, "abc");  //=> 1 and abc
 
 
 Dependency
