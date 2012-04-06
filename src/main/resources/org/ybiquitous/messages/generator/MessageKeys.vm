@@ -1,0 +1,22 @@
+#if($packageName)
+package ${packageName};
+#end
+
+import org.ybiquitous.messages.MessageKey;
+
+#foreach($class in $importClasses)
+import $class.name;
+#end
+
+@javax.annotation.Generated(
+    value = "$!{generator}",
+    comments = "$!{description}",
+    date = "$!{timestamp}")
+public final class ${className} {
+
+#foreach($key in $messageKeys)
+    public static final MessageKey ${key.identifier} = MessageKey.of("${key.real}", "${messageResource}");
+#end
+
+    private ${className}() {}
+}

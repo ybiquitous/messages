@@ -6,7 +6,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
-import java.nio.charset.Charset;
 import java.text.MessageFormat;
 import java.util.Arrays;
 import java.util.List;
@@ -60,9 +59,8 @@ class DefaultMessageBuilder implements MessageBuilder {
 
         public static final CustomControl INSTANCE = new CustomControl();
 
-        private static final List<String> FORMATS = Arrays.asList("properties");
-
-        private static final Charset CHARSET = Charset.forName("UTF-8");
+        private static final List<String> FORMATS = Arrays
+                .asList(Constants.DEFAULT_MESSAGE_RESOURCE_EXTENSION);
 
         @Override
         public List<String> getFormats(String baseName) {
@@ -86,8 +84,9 @@ class DefaultMessageBuilder implements MessageBuilder {
             }
 
             try {
-                return new PropertyResourceBundle(new BufferedReader(
-                        new InputStreamReader(stream, CHARSET)));
+                return new PropertyResourceBundle(
+                        new BufferedReader(new InputStreamReader(stream,
+                                Constants.DEFAULT_CHARSET)));
             } finally {
                 stream.close();
             }

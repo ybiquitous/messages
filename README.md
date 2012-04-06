@@ -16,4 +16,11 @@ _Java_
 Dependency
 ==========
 
-No Dependency.
+Required:
+
+* None.
+
+Optional:
+
+* Apache Velocity 1.7+
+* Apache Ant 1.8+

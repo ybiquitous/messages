@@ -7,7 +7,7 @@ import java.util.WeakHashMap;
 public final class MessageKey {
 
     public static MessageKey of(String key) {
-        return of(key, DEFAULT_RESOURCE_NAME);
+        return of(key, Constants.DEFAULT_MESSAGE_RESOURCE_NAME);
     }
 
     public static MessageKey of(String key, String resourceName) {
@@ -25,8 +25,6 @@ public final class MessageKey {
     }
 
     private static final Map<CacheKey, MessageKey> CACHE = new WeakHashMap<CacheKey, MessageKey>();
-
-    private static final String DEFAULT_RESOURCE_NAME = "messages";
 
     private final String _key;
 
