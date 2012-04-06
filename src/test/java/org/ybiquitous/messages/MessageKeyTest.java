@@ -11,17 +11,17 @@ public class MessageKeyTest {
 
     @Test
     public void simple() {
-        MessageKey test_key = newMessageKey("test.key");
+        MessageKey test_key = MessageKey.of("test.key");
         assertThat(test_key.get(1, 2, "三"), is("1 足す 2 は 三"));
 
-        MessageKey test_key1 = newMessageKey("test.key1");
-        MessageKey test_key2 = newMessageKey("test.key2");
+        MessageKey test_key1 = MessageKey.of("test.key1");
+        MessageKey test_key2 = MessageKey.of("test.key2", "messages");
         assertThat(test_key2.get(test_key1), is("'aaa' from other key"));
     }
 
     @Test
     public void locale() {
-        MessageKey test_key = newMessageKey("test.key");
+        MessageKey test_key = MessageKey.of("test.key");
         assertThat(test_key.get(1, 2, "三"), is("1 足す 2 は 三"));
 
         MessageLocaleHolder.set(Locale.ENGLISH);
@@ -30,9 +30,5 @@ public class MessageKeyTest {
         MessageLocaleHolder.reset();
         assertThat(test_key.get(1, 2, "三"), is("1 足す 2 は 三"));
         assertThat(test_key.get(Locale.ENGLISH, 1, 2, 3), is("1 plus 2 is 3"));
-    }
-
-    private MessageKey newMessageKey(String key) {
-        return new MessageKey(key);
     }
 }

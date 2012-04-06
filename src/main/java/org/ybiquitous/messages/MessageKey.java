@@ -4,21 +4,25 @@ import java.util.Locale;
 
 public final class MessageKey {
 
+    public static MessageKey of(String key) {
+        return of(key, DEFAULT_RESOURCE_NAME);
+    }
+
+    public static MessageKey of(String key, String resourceName) {
+        return of(key, DefaultMessageBuilder.create(resourceName));
+    }
+
+    public static MessageKey of(String key, MessageBuilder builder) {
+        return new MessageKey(key, builder);
+    }
+
     private static final String DEFAULT_RESOURCE_NAME = "messages";
 
     private final String _key;
 
     private transient final MessageBuilder _builder;
 
-    public MessageKey(String key) {
-        this(key, DEFAULT_RESOURCE_NAME);
-    }
-
-    public MessageKey(String key, String resourceName) {
-        this(key, DefaultMessageBuilder.create(resourceName));
-    }
-
-    public MessageKey(String key, MessageBuilder builder) {
+    private MessageKey(String key, MessageBuilder builder) {
         this._key = Utils.notNull(key, "key");
         this._builder = Utils.notNull(builder, "builder");
     }
