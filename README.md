@@ -1,5 +1,5 @@
-Code Example
-============
+Example
+=======
 
 _messages.properties_
 
