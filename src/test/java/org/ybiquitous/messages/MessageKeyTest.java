@@ -33,6 +33,6 @@ public class MessageKeyTest {
     }
 
     private MessageKey newMessageKey(String key) {
-        return new MessageKey(key, "messages");
+        return new MessageKey(key);
     }
 }

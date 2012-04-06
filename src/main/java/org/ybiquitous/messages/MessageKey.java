@@ -4,9 +4,15 @@ import java.util.Locale;
 
 public final class MessageKey {
 
+    private static final String DEFAULT_RESOURCE_NAME = "messages";
+
     private final String _key;
 
     private transient final MessageBuilder _builder;
+
+    public MessageKey(String key) {
+        this(key, DEFAULT_RESOURCE_NAME);
+    }
 
     public MessageKey(String key, String resourceName) {
         this(key, DefaultMessageBuilder.create(resourceName));
