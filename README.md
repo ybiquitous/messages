@@ -22,5 +22,5 @@ Required:
 
 Optional:
 
-* Apache Velocity 1.7+
-* Apache Ant 1.8+
+* Apache Velocity 1.5+
+* Apache Ant 1.7+

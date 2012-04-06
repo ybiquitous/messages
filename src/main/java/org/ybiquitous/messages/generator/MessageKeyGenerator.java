@@ -22,6 +22,7 @@ import java.util.regex.Pattern;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
+import org.apache.velocity.runtime.log.NullLogChute;
 import org.ybiquitous.messages.Constants;
 import org.ybiquitous.messages.Utils;
 
@@ -112,7 +113,7 @@ public final class MessageKeyGenerator {
         try {
             final Properties messageResource = loadMessageResource(parameter);
             return renderTemplate(parameter, messageResource);
-        } catch (IOException e) {
+        } catch (Exception e) {
             throw new IllegalStateException(e);
         }
     }
@@ -148,12 +149,16 @@ public final class MessageKeyGenerator {
     }
 
     private static File renderTemplate(Parameter parameter,
-            Properties messageResource) throws IOException {
+            Properties messageResource) throws Exception {
+
+        final Properties props = new Properties();
+        props.setProperty(VelocityEngine.FILE_RESOURCE_LOADER_PATH,
+                parameter.templateFile.getParent());
+        props.setProperty(VelocityEngine.RUNTIME_LOG_LOGSYSTEM_CLASS,
+                NullLogChute.class.getName());
 
         final VelocityEngine engine = new VelocityEngine();
-        engine.setProperty(VelocityEngine.FILE_RESOURCE_LOADER_PATH,
-                parameter.templateFile.getParent());
-        engine.init();
+        engine.init(props);
 
         final Template template = engine.getTemplate(
                 parameter.templateFile.getName(),
