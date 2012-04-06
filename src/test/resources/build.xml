@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="project" default="default">
+	<taskdef name="generate" classname="org.ybiquitous.messages.generator.MessageKeyGeneratorTask" />
+
+	<property name="indir" value="${project.build.testOutputDirectory}" />
+	<property name="outdir" value="${project.build.directory}/ant-test/" />
+
+	<target name="default">
+		<generate outputDirectory="${outdir}" />
+	</target>
+
+	<target name="custom">
+		<generate
+			outputDirectory="${outdir}"
+			outputEncoding="EUC-JP"
+			packageName="msg"
+			className="MsgKeys"
+			description="てすと"
+			messageResourceFile="${indir}/iso-8859-1.properties"
+			messageResourceFileEncoding="ISO-8859-1"
+			templateFile="${indir}/template.vm"
+			templateFileEncoding="UTF-8">
+
+			<importClass name="java.util.List" />
+			<importClass name="java.util.Set" />
+		</generate>
+	</target>
+
+</project>

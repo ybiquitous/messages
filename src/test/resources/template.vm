@@ -1,0 +1,5 @@
+#foreach($class in $importClasses)
+$class.name
+#end
+
+${className} てすと

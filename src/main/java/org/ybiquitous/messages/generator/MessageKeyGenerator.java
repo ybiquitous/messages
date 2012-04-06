@@ -34,11 +34,11 @@ public final class MessageKeyGenerator {
         public String className;
         public String description;
         public File messageResourceFile;
-        public Charset messageResourceFileCharset;
+        public Charset messageResourceFileEncoding;
         public File templateFile;
-        public Charset templateFileCharset;
+        public Charset templateFileEncoding;
         public File outputDirectory;
-        public Charset outputCharset;
+        public Charset outputEncoding;
         public List<Class<?>> importClasses;
 
         public void initialize() {
@@ -55,21 +55,21 @@ public final class MessageKeyGenerator {
                 this.messageResourceFile = Utils.getResourceFile(getClass(),
                         '/' + Constants.DEFAULT_MESSAGE_RESOURCE);
             }
-            if (this.messageResourceFileCharset == null) {
-                this.messageResourceFileCharset = Constants.DEFAULT_CHARSET;
+            if (this.messageResourceFileEncoding == null) {
+                this.messageResourceFileEncoding = Constants.DEFAULT_CHARSET;
             }
             if (this.templateFile == null) {
                 this.templateFile = Utils.getResourceFile(getClass(),
                         "MessageKeys.vm");
             }
-            if (this.templateFileCharset == null) {
-                this.templateFileCharset = Constants.DEFAULT_CHARSET;
+            if (this.templateFileEncoding == null) {
+                this.templateFileEncoding = Constants.DEFAULT_CHARSET;
             }
             if (this.outputDirectory == null) {
                 this.outputDirectory = new File(".");
             }
-            if (this.outputCharset == null) {
-                this.outputCharset = Constants.DEFAULT_CHARSET;
+            if (this.outputEncoding == null) {
+                this.outputEncoding = Constants.DEFAULT_CHARSET;
             }
             if (this.importClasses == null) {
                 this.importClasses = new ArrayList<Class<?>>();
@@ -122,7 +122,7 @@ public final class MessageKeyGenerator {
             throws IOException {
         final InputStreamReader reader = new InputStreamReader(
                 new FileInputStream(parameter.messageResourceFile),
-                parameter.messageResourceFileCharset);
+                parameter.messageResourceFileEncoding);
         try {
             final Properties result = new Properties();
             result.load(reader);
@@ -162,12 +162,12 @@ public final class MessageKeyGenerator {
 
         final Template template = engine.getTemplate(
                 parameter.templateFile.getName(),
-                parameter.templateFileCharset.name());
+                parameter.templateFileEncoding.name());
 
         final File outputFile = buildJavaFile(parameter);
         final BufferedWriter writer = new BufferedWriter(
                 new OutputStreamWriter(new FileOutputStream(outputFile),
-                        parameter.outputCharset));
+                        parameter.outputEncoding));
         try {
             template.merge(buildContext(parameter, messageResource), writer);
         } finally {
