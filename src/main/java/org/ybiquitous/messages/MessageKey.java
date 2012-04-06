@@ -1,6 +1,8 @@
 package org.ybiquitous.messages;
 
 import java.util.Locale;
+import java.util.Map;
+import java.util.WeakHashMap;
 
 public final class MessageKey {
 
@@ -13,8 +15,16 @@ public final class MessageKey {
     }
 
     public static MessageKey of(String key, MessageBuilder builder) {
-        return new MessageKey(key, builder);
+        final CacheKey cacheKey = new CacheKey(key, builder);
+        MessageKey result = CACHE.get(cacheKey);
+        if (result == null) {
+            result = new MessageKey(key, builder);
+            CACHE.put(cacheKey, result);
+        }
+        return result;
     }
+
+    private static final Map<CacheKey, MessageKey> CACHE = new WeakHashMap<CacheKey, MessageKey>();
 
     private static final String DEFAULT_RESOURCE_NAME = "messages";
 
