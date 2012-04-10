@@ -9,7 +9,7 @@
   <version>0.0.1-SNAPSHOT</version>
   <packaging>bundle</packaging>
   <name>Simple Message Library</name>
-  <url></url>
+  <url>https://github.com/ybiquitous/messages</url>
   <inceptionYear>2012</inceptionYear>
 
   <properties>
@@ -163,6 +163,12 @@
       <distribution>repo</distribution>
     </license>
   </licenses>
+
+  <scm>
+    <connection>scm:git:git@github.com:ybiquitous/messages.git</connection>
+    <developerConnection>scm:git:git@github.com:ybiquitous/messages.git</developerConnection>
+    <url>https://github.com/ybiquitous/messages</url>
+  </scm>
 
   <distributionManagement>
     <repository>
