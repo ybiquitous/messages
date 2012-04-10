@@ -145,4 +145,15 @@
     </license>
   </licenses>
 
+  <distributionManagement>
+    <repository>
+      <id>repo</id>
+      <url>https://github.com/ybiquitous/mvnrepo/raw/master/release</url>
+    </repository>
+    <snapshotRepository>
+      <id>snapshot-repo</id>
+      <url>https://github.com/ybiquitous/mvnrepo/raw/master/snapshot</url>
+    </snapshotRepository>
+  </distributionManagement>
+
 </project>
