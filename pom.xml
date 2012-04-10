@@ -67,6 +67,25 @@
         <filtering>true</filtering>
       </testResource>
     </testResources>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-javadoc-plugin</artifactId>
+          <version>2.8.1</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-source-plugin</artifactId>
+          <version>2.1.2</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-deploy-plugin</artifactId>
+          <version>2.7</version>
+        </plugin>
+      </plugins>
+    </pluginManagement>
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -147,13 +166,25 @@
 
   <distributionManagement>
     <repository>
-      <id>repo</id>
-      <url>https://github.com/ybiquitous/mvnrepo/raw/master/release</url>
+      <id>release-repo</id>
+      <url>https://github.com/ybiquitous/mvnrepo/raw/master/release/</url>
     </repository>
     <snapshotRepository>
       <id>snapshot-repo</id>
-      <url>https://github.com/ybiquitous/mvnrepo/raw/master/snapshot</url>
+      <url>https://github.com/ybiquitous/mvnrepo/raw/master/snapshot/</url>
     </snapshotRepository>
   </distributionManagement>
+
+  <profiles>
+    <profile>
+      <id>deploy</id>
+      <activation>
+        <property><name>deploy.type</name></property>
+      </activation>
+      <properties>
+        <altDeploymentRepository>${deploy.type}-repo::default::file://${deploy.path}/${deploy.type}</altDeploymentRepository>
+      </properties>
+    </profile>
+  </profiles>
 
 </project>
