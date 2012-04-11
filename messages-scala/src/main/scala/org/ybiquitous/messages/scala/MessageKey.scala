@@ -5,7 +5,7 @@ import java.util.Locale
 import org.ybiquitous.messages.{ MessageKey => MsgKey }
 import org.ybiquitous.messages.{ MessageBuilder => MsgBuilder }
 
-final class MessageKey private(val delegate: MsgKey) {
+final class MessageKey private(private val delegate: MsgKey) {
   def get(args: Any*) = delegate.get(args map unwrapArg: _*)
   def get(locale: Locale, args: Any*) = delegate.get(locale, args map unwrapArg: _*)
   override def toString = delegate.toString
