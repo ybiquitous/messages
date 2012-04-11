@@ -216,6 +216,9 @@
                 <arg>-deprecation</arg>
                 <arg>-unchecked</arg>
               </args>
+              <includes>
+                <include>**/*.scala</include>
+              </includes>
             </configuration>
             <executions>
               <execution>

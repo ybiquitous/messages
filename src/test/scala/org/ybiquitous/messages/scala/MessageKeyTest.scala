@@ -23,4 +23,17 @@ class MessageKeyTest {
     val key = MessageKey("test.key")
     assertThat(key.get(Locale.ENGLISH, 1, 2, "3"), is("1 plus 2 is 3"))
   }
+
+  @Test def resource() {
+    val key = MessageKey("test.key", "messages")
+    assertThat(key.get(1, 2, "3"), is("1 足す 2 は 3"))
+  }
+
+  @Test def builder() {
+    val key = MessageKey("test.key", {
+      (l: Locale, k: String, args: Seq[Any]) =>
+        List(l, k) ::: args.toList mkString ", "
+    })
+    assertThat(key.get(Locale.ENGLISH, 1, 2), is("en, test.key, 1, 2"))
+  }
 }
