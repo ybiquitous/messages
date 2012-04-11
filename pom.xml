@@ -7,7 +7,7 @@
   <artifactId>messages-parent</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <packaging>pom</packaging>
-  <name>Simple Message Library</name>
+  <name>Simple Message Library Parent</name>
   <url>https://github.com/ybiquitous/messages</url>
   <inceptionYear>2012</inceptionYear>
 
@@ -19,7 +19,7 @@
 
   <properties>
     <encoding>UTF-8</encoding>
-    <locale>en</locale>
+    <base.locale>en</base.locale>
   </properties>
 
   <dependencyManagement>
@@ -70,6 +70,9 @@
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-javadoc-plugin</artifactId>
           <version>2.8.1</version>
+          <configuration>
+            <locale>${base.locale}</locale>
+          </configuration>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
@@ -83,29 +86,16 @@
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-site-plugin</artifactId>
-          <version>3.0</version>
-          <configuration>
-            <locales>en</locales>
-          <reportPlugins>
-            <plugin>
-              <groupId>org.apache.maven.plugins</groupId>
-              <artifactId>maven-project-info-reports-plugin</artifactId>
-            </plugin>
-            <plugin>
-              <groupId>org.apache.maven.plugins</groupId>
-              <artifactId>maven-javadoc-plugin</artifactId>
-              <reports>
-                <report>javadoc</report>
-              </reports>
-            </plugin>
-          </reportPlugins>
-          </configuration>
+          <artifactId>maven-project-info-reports-plugin</artifactId>
+          <version>2.4</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-project-info-reports-plugin</artifactId>
-          <version>2.4</version>
+          <artifactId>maven-site-plugin</artifactId>
+          <version>3.0</version>
+          <configuration>
+            <locales>${base.locale}</locales>
+          </configuration>
         </plugin>
         <plugin>
           <groupId>org.apache.felix</groupId>
@@ -131,6 +121,33 @@
         </plugin>
       </plugins>
     </pluginManagement>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-site-plugin</artifactId>
+        <configuration>
+          <reportPlugins>
+            <plugin>
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-project-info-reports-plugin</artifactId>
+              <reports>
+                <report>dependency-convergence</report>
+                <report>dependency-management</report>
+                <report>distribution-management</report>
+                <report>help</report>
+                <report>index</report>
+                <report>license</report>
+                <report>modules</report>
+                <report>plugin-management</report>
+                <report>plugins</report>
+                <report>scm</report>
+                <report>summary</report>
+              </reports>
+            </plugin>
+          </reportPlugins>
+        </configuration>
+      </plugin>
+    </plugins>
   </build>
 
   <licenses>
