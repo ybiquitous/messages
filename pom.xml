@@ -128,6 +128,7 @@
                 <report>modules</report>
                 <report>plugin-management</report>
                 <report>plugins</report>
+                <report>project-team</report>
                 <report>scm</report>
                 <report>summary</report>
               </reports>
@@ -153,6 +154,13 @@
       </plugin>
     </plugins>
   </build>
+
+  <developers>
+    <developer>
+      <id>ybiquitous</id>
+      <email>10koba01 at gmail.com</email>
+    </developer>
+  </developers>
 
   <licenses>
     <license>
