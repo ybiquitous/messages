@@ -4,7 +4,7 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>org.ybiquitous</groupId>
+    <groupId>org.ybiquitous.messages</groupId>
     <artifactId>messages-parent</artifactId>
     <version>0.0.1-SNAPSHOT</version>
   </parent>
