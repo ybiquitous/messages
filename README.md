@@ -1,26 +1,27 @@
 Example
 =======
 
-_messages.properties_
+messages.properties(on classpath root)
 
-    test.key = {0} and {1}
+```
+test.key = {0} and {1}
+```
 
-_Java_
+Java
 
-    import org.ybiquitous.messages.*;
+```java
+import org.ybiquitous.messages.*;
 
-    MessageKey.of("test.key").get(1, "abc");  //=> 1 and abc
-    MessageKey.of("test.key", "messages").get(1, "abc");  //=> 1 and abc
+MessageKey.of("test.key").get(1, "abc");  //=> 1 and abc
+MessageKey.of("test.key", "messages").get(1, "abc");  //=> 1 and abc
+```
 
+Homepage
+========
 
-Dependency
-==========
+http://ybiquitous.github.com/messages/
 
-Required:
+License
+=======
 
-* None.
-
-Optional:
-
-* Apache Velocity 1.5+
-* Apache Ant 1.7+
+[The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
