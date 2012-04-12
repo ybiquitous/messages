@@ -121,6 +121,16 @@
                 <report>summary</report>
               </reports>
             </plugin>
+            <plugin>
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-javadoc-plugin</artifactId>
+              <configuration>
+                <locale>${base.locale}</locale>
+              </configuration>
+              <reports>
+                <report>aggregate</report>
+              </reports>
+            </plugin>
           </reportPlugins>
         </configuration>
       </plugin>
@@ -210,7 +220,11 @@
                     </copy>
                   </then>
                   <else>
-                    <copy todir="${site.deploy.path}">
+                    <property name="dir" value="${site.deploy.path}" />
+                    <delete includeemptydirs="true">
+                      <fileset dir="${dir}" includes="**/*" defaultexcludes="true" />
+                    </delete>
+                    <copy todir="${dir}">
                       <fileset dir="${project.reporting.outputDirectory}" />
                     </copy>
                   </else>
