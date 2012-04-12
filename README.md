@@ -30,6 +30,13 @@ Homepage
 
 http://ybiquitous.github.com/messages/
 
+API
+===
+
+[Core](http://ybiquitous.github.com/messages/messages-core/apidocs/)
+[Generator](http://ybiquitous.github.com/messages/messages-generator/apidocs/)
+[Scala](http://ybiquitous.github.com/messages/messages-scala/scaladocs/)
+
 License
 =======
 
