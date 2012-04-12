@@ -1,0 +1,1 @@
+Index.PACKAGES = {"org" : [], "org.ybiquitous" : [], "org.ybiquitous.messages" : [], "org.ybiquitous.messages.scala" : [{"object" : "org\/ybiquitous\/messages\/scala\/MessageKey$.html", "class" : "org\/ybiquitous\/messages\/scala\/MessageKey.html", "name" : "org.ybiquitous.messages.scala.MessageKey"}]};
