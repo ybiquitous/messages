@@ -8,7 +8,7 @@
   <version>0.0.1-SNAPSHOT</version>
   <packaging>pom</packaging>
   <name>Simple Message Library Parent</name>
-  <url>https://github.com/ybiquitous/messages</url>
+  <url>http://ybiquitous.github.com/messages/</url>
   <inceptionYear>2012</inceptionYear>
 
   <modules>
@@ -79,6 +79,11 @@
           <configuration>
             <locales>${base.locale}</locales>
           </configuration>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-antrun-plugin</artifactId>
+          <version>1.7</version>
         </plugin>
         <plugin>
           <groupId>org.apache.felix</groupId>
@@ -181,6 +186,47 @@
       <properties>
         <altDeploymentRepository>${deploy.type}-repo::default::file://${deploy.path}/${deploy.type}</altDeploymentRepository>
       </properties>
+    </profile>
+    <profile>
+      <id>deploy-site</id>
+      <activation>
+        <property>
+          <name>site.deploy.path</name>
+        </property>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-antrun-plugin</artifactId>
+            <configuration>
+              <target>
+                <taskdef name="if" classname="net.sf.antcontrib.logic.IfTask" />
+                <if>
+                  <equals arg1="${project.parent.groupId}" arg2="${project.groupId}" />
+                  <then>
+                    <copy todir="${site.deploy.path}/${project.artifactId}">
+                      <fileset dir="${project.reporting.outputDirectory}" />
+                    </copy>
+                  </then>
+                  <else>
+                    <copy todir="${site.deploy.path}">
+                      <fileset dir="${project.reporting.outputDirectory}" />
+                    </copy>
+                  </else>
+                </if>
+              </target>
+            </configuration>
+            <dependencies>
+              <dependency>
+                <groupId>ant-contrib</groupId>
+                <artifactId>ant-contrib</artifactId>
+                <version>20020829</version>
+              </dependency>
+            </dependencies>
+          </plugin>
+        </plugins>
+      </build>
     </profile>
   </profiles>
 
