@@ -33,9 +33,8 @@ http://ybiquitous.github.com/messages/
 API
 ===
 
-- [Core(Javadoc)](http://ybiquitous.github.com/messages/messages-core/apidocs/)
-- [Generator(Javadoc)](http://ybiquitous.github.com/messages/messages-generator/apidocs/)
-- [Scala(Scaladoc)](http://ybiquitous.github.com/messages/messages-scala/scaladocs/)
+- [Java](http://ybiquitous.github.com/messages/apidocs/)
+- [Scala](http://ybiquitous.github.com/messages/messages-scala/scaladocs/)
 
 License
 =======
