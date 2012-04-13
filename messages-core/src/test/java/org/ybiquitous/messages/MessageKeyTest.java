@@ -31,4 +31,16 @@ public class MessageKeyTest {
         assertThat(test_key.get(1, 2, "三"), is("1 足す 2 は 三"));
         assertThat(test_key.get(Locale.ENGLISH, 1, 2, 3), is("1 plus 2 is 3"));
     }
+
+    @Test(expected = MessageKeyNotFoundException.class)
+    public void missing() {
+        MessageKey.of("missing.key").get();
+    }
+
+    @Test
+    public void defaultValue() {
+        assertThat(MessageKey.of("missing.key").getOrElse("aa"), is("aa"));
+        assertThat(MessageKey.of("missing.key").getOrElse(new Object[] { 1, 2 }, "aa"), is("aa"));
+        assertThat(MessageKey.of("missing.key").getOrElse(Locale.CANADA, "aa"), is("aa"));
+    }
 }

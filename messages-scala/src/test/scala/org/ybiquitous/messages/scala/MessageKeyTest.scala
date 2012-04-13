@@ -30,10 +30,20 @@ class MessageKeyTest {
   }
 
   @Test def builder() {
-    val key = MessageKey("test.key", {
-      (l: Locale, k: String, args: Seq[Any]) =>
-        List(l, k) ::: args.toList mkString ", "
-    })
+    val builder = new MessageBuilder {
+      def build(locale: Locale, key: String, args: Seq[Any]): String = {
+        List(locale, key) ::: args.toList mkString ", "
+      }
+    }
+    val key = MessageKey("test.key", builder)
     assertThat(key.get(Locale.ENGLISH, 1, 2), is("en, test.key, 1, 2"))
+  }
+
+  @Test def missing() {
+    val key = MessageKey("a")
+    assertThat(key.getOrElse("def"), is("def"))
+    assertThat(key.getOrElse(Seq(1), "def"), is("def"))
+    assertThat(key.getOrElse(Locale.ENGLISH, "def"), is("def"))
+    assertThat(key.getOrElse(Locale.ENGLISH, Seq(1), "def"), is("def"))
   }
 }

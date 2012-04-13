@@ -6,6 +6,8 @@ import java.util.WeakHashMap;
 
 public final class MessageKey {
 
+    private static final Object[] EMPTY_ARGS = {};
+
     public static MessageKey of(String key) {
         return of(key, Constants.DEFAULT_MESSAGE_RESOURCE_NAME);
     }
@@ -35,12 +37,28 @@ public final class MessageKey {
         this._builder = Utils.notNull(builder, "builder");
     }
 
-    public String get(Object... args) {
+    public String get(Object... args) throws MessageKeyNotFoundException {
         return get(MessageLocaleHolder.get(), args);
     }
 
-    public String get(Locale locale, Object... args) {
+    public String get(Locale locale, Object... args) throws MessageKeyNotFoundException {
         return this._builder.build(locale, this._key, args);
+    }
+
+    public String getOrElse(String defaultValue) {
+        return getOrElse(EMPTY_ARGS, defaultValue);
+    }
+
+    public String getOrElse(Object[] args, String defaultValue) {
+        return getOrElse(MessageLocaleHolder.get(), args, defaultValue);
+    }
+
+    public String getOrElse(Locale locale, String defaultValue) {
+        return getOrElse(locale, EMPTY_ARGS, defaultValue);
+    }
+
+    public String getOrElse(Locale locale, Object[] args, String defaultValue) {
+        return this._builder.buildOrElse(locale, this._key, args, defaultValue);
     }
 
     @Override

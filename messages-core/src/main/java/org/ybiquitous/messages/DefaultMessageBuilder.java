@@ -11,6 +11,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.MissingResourceException;
 import java.util.PropertyResourceBundle;
 import java.util.ResourceBundle;
 import java.util.WeakHashMap;
@@ -49,9 +50,25 @@ class DefaultMessageBuilder implements MessageBuilder {
         return _build(locale, key, newArgs);
     }
 
+    @Override
+    public String buildOrElse(Locale locale, String key, Object[] args,
+            String defaultValue) {
+        try {
+            return build(locale, key, args);
+        } catch (MessageKeyNotFoundException e) {
+            return defaultValue;
+        }
+    }
+
     private String _build(Locale locale, String key, Object... args) {
-        final String base = ResourceBundle.getBundle(this._baseName, locale,
-                CustomControl.INSTANCE).getString(key);
+        final String base;
+        try {
+            base = ResourceBundle.getBundle(this._baseName, locale,
+                    CustomControl.INSTANCE).getString(key);
+        } catch (MissingResourceException e) {
+            throw new MessageKeyNotFoundException(this._baseName + " : "
+                    + locale + " : " + key, e);
+        }
         return new MessageFormat(base, locale).format(args);
     }
 
