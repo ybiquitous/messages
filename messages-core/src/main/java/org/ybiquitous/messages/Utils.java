@@ -8,8 +8,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.net.URISyntaxException;
-import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
@@ -67,22 +65,6 @@ public final class Utils {
             }
         } finally {
             writer.close();
-        }
-    }
-
-    public static File getResourceFile(Class<?> clazz, String name) {
-        notNull(clazz, "clazz");
-        notNull(name, "name");
-
-        final URL resource = clazz.getResource(name);
-        if (resource == null) {
-            throw new IllegalArgumentException(name + " not found");
-        }
-
-        try {
-            return new File(resource.toURI());
-        } catch (URISyntaxException e) {
-            throw new IllegalArgumentException(e);
         }
     }
 

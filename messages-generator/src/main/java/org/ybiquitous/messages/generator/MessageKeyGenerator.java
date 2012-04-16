@@ -2,11 +2,12 @@ package org.ybiquitous.messages.generator;
 
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.nio.charset.Charset;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -22,7 +23,6 @@ import java.util.regex.Pattern;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
-import org.apache.velocity.runtime.log.NullLogChute;
 import org.ybiquitous.messages.Constants;
 import org.ybiquitous.messages.Utils;
 
@@ -41,6 +41,9 @@ public final class MessageKeyGenerator {
         public Charset outputEncoding;
         public List<Class<?>> importClasses;
 
+        private URL messageResourceUrl;
+        private URL templateUrl;
+
         public void initialize() {
             if (this.packageName == null) {
                 this.packageName = "message";
@@ -52,15 +55,18 @@ public final class MessageKeyGenerator {
                 this.description = "This is an auto generated class.";
             }
             if (this.messageResourceFile == null) {
-                this.messageResourceFile = Utils.getResourceFile(getClass(),
+                this.messageResourceUrl = getClass().getResource(
                         '/' + Constants.DEFAULT_MESSAGE_RESOURCE);
+            } else {
+                this.messageResourceUrl = toURL(this.messageResourceFile);
             }
             if (this.messageResourceFileEncoding == null) {
                 this.messageResourceFileEncoding = Constants.DEFAULT_CHARSET;
             }
             if (this.templateFile == null) {
-                this.templateFile = Utils.getResourceFile(getClass(),
-                        "MessageKeys.vm");
+                this.templateUrl = getClass().getResource("MessageKeys.vm");
+            } else {
+                this.templateUrl = toURL(this.templateFile);
             }
             if (this.templateFileEncoding == null) {
                 this.templateFileEncoding = Constants.DEFAULT_CHARSET;
@@ -103,6 +109,15 @@ public final class MessageKeyGenerator {
             }
             return null;
         }
+
+        private static URL toURL(File file) {
+            Utils.notNull(file, "file");
+            try {
+                return file.toURI().toURL();
+            } catch (MalformedURLException e) {
+                throw new IllegalArgumentException(file.toString(), e);
+            }
+        }
     }
 
     public static File generate(Parameter parameter) {
@@ -121,7 +136,7 @@ public final class MessageKeyGenerator {
     private static Properties loadMessageResource(Parameter parameter)
             throws IOException {
         final InputStreamReader reader = new InputStreamReader(
-                new FileInputStream(parameter.messageResourceFile),
+                parameter.messageResourceUrl.openStream(),
                 parameter.messageResourceFileEncoding);
         try {
             final Properties result = new Properties();
@@ -151,17 +166,11 @@ public final class MessageKeyGenerator {
     private static File renderTemplate(Parameter parameter,
             Properties messageResource) throws Exception {
 
-        final Properties props = new Properties();
-        props.setProperty(VelocityEngine.FILE_RESOURCE_LOADER_PATH,
-                parameter.templateFile.getParent());
-        props.setProperty(VelocityEngine.RUNTIME_LOG_LOGSYSTEM_CLASS,
-                NullLogChute.class.getName());
-
         final VelocityEngine engine = new VelocityEngine();
-        engine.init(props);
+        engine.init(new VelocityConfig(parameter.templateUrl));
 
         final Template template = engine.getTemplate(
-                parameter.templateFile.getName(),
+                getLastSegment(parameter.templateUrl),
                 parameter.templateFileEncoding.name());
 
         final File outputFile = buildJavaFile(parameter);
@@ -176,6 +185,11 @@ public final class MessageKeyGenerator {
         return outputFile;
     }
 
+    private static String getLastSegment(URL url) {
+        String urlStr = url.toString();
+        return urlStr.substring(urlStr.lastIndexOf('/'));
+    }
+
     private static VelocityContext buildContext(Parameter parameter,
             Properties messageResource) {
         final VelocityContext context = new VelocityContext();
@@ -188,8 +202,9 @@ public final class MessageKeyGenerator {
         context.put("importClasses", parameter.importClasses);
         context.put(
                 "messageResource",
-                parameter.messageResourceFile.getName().replace(
-                        '.' + Constants.DEFAULT_MESSAGE_RESOURCE_EXTENSION, ""));
+                getLastSegment(parameter.messageResourceUrl)
+                    .replace('.' + Constants.DEFAULT_MESSAGE_RESOURCE_EXTENSION, "")
+                    .replaceFirst("/", ""));
         return context;
     }
 
