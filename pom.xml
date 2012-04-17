@@ -211,11 +211,6 @@
     </profile>
     <profile>
       <id>deploy-site</id>
-      <activation>
-        <property>
-          <name>site.deploy.path</name>
-        </property>
-      </activation>
       <build>
         <plugins>
           <plugin>
@@ -223,20 +218,27 @@
             <artifactId>maven-antrun-plugin</artifactId>
             <configuration>
               <target>
+                <property name="tmpdir" value="${java.io.tmpdir}/${user.name}/deploy-site" />
+                <property name="sitedir" value="${tmpdir}/messages" />
+
                 <taskdef name="if" classname="net.sf.antcontrib.logic.IfTask" />
                 <if>
                   <equals arg1="${project.parent.groupId}" arg2="${project.groupId}" />
                   <then>
-                    <copy todir="${site.deploy.path}/${project.artifactId}">
+                    <copy todir="${sitedir}/${project.artifactId}">
                       <fileset dir="${project.reporting.outputDirectory}" />
                     </copy>
                   </then>
                   <else>
-                    <property name="dir" value="${site.deploy.path}" />
+                    <delete dir="${tmpdir}" />
+                    <mkdir dir="${tmpdir}" />
+                    <exec executable="git" dir="${tmpdir}">
+                      <arg line="clone git@github.com:ybiquitous/messages.git -b gh-pages" />
+                    </exec>
                     <delete includeemptydirs="true">
-                      <fileset dir="${dir}" includes="**/*" defaultexcludes="true" />
+                      <fileset dir="${sitedir}" includes="**/*" defaultexcludes="true" />
                     </delete>
-                    <copy todir="${dir}">
+                    <copy todir="${sitedir}">
                       <fileset dir="${project.reporting.outputDirectory}" />
                     </copy>
                   </else>
