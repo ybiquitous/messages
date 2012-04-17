@@ -26,6 +26,8 @@ public class AppFilter implements Filter {
         String lang = httpReq.getParameter("lang");
         if (lang != null && !lang.isEmpty()) {
             ThreadLocalLocaleHolder.set(new Locale(lang));
+        } else if ((lang = (String) httpReq.getSession().getAttribute("lang")) != null) {
+            ThreadLocalLocaleHolder.set(new Locale(lang));
         }
         httpReq.getSession().setAttribute("lang", ThreadLocalLocaleHolder.get().getLanguage());
 
