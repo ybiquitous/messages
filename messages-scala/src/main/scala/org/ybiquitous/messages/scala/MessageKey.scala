@@ -25,7 +25,7 @@ case class MessageKey(
   builder: Option[MessageBuilder] = None
 ) extends MessageKeyDelegate {
 
-  protected override def delegate = {
+  protected override val delegate = {
     resource match {
       case Some(x) => MsgKey.of(key, resource.get)
       case _ => builder match {
