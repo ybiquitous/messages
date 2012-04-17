@@ -86,6 +86,13 @@ class DefaultMessageBuilder implements MessageBuilder {
         }
 
         @Override
+        public Locale getFallbackLocale(String baseName, Locale locale) {
+            Utils.notNull(baseName, "baseName");
+            Utils.notNull(locale, "locale");
+            return null;
+        }
+
+        @Override
         public ResourceBundle newBundle(String baseName, Locale locale,
                 String format, ClassLoader loader, boolean reload)
                 throws IllegalAccessException, InstantiationException,
