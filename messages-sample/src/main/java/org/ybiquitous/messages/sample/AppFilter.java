@@ -3,6 +3,7 @@ package org.ybiquitous.messages.sample;
 import java.io.IOException;
 import java.util.Locale;
 
+import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
@@ -10,9 +11,9 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 
-import org.ybiquitous.messages.MessageLocaleHolder;
+import org.ybiquitous.messages.ThreadLocalLocaleHolder;
 
-public class Filter implements javax.servlet.Filter {
+public class AppFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest req, ServletResponse res,
@@ -24,23 +25,21 @@ public class Filter implements javax.servlet.Filter {
         HttpServletRequest httpReq = (HttpServletRequest) req;
         String lang = httpReq.getParameter("lang");
         if (lang != null && !lang.isEmpty()) {
-            MessageLocaleHolder.set(new Locale(lang));
+            ThreadLocalLocaleHolder.set(new Locale(lang));
         }
-        httpReq.getSession().setAttribute("lang", MessageLocaleHolder.get().getLanguage());
+        httpReq.getSession().setAttribute("lang", ThreadLocalLocaleHolder.get().getLanguage());
 
         chain.doFilter(req, res);
     }
 
     @Override
     public void destroy() {
-        // TODO Auto-generated method stub
-
+        // pass
     }
 
     @Override
-    public void init(FilterConfig arg0) throws ServletException {
-        // TODO Auto-generated method stub
-
+    public void init(FilterConfig config) throws ServletException {
+        // pass
     }
 
 }

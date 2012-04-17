@@ -10,7 +10,7 @@
   </parent>
 
   <artifactId>messages-sample</artifactId>
-  <packaging>bundle</packaging>
+  <packaging>war</packaging>
   <name>Simple Message Library Sample</name>
 
   <properties>
@@ -33,11 +33,6 @@
 
   <build>
     <plugins>
-      <plugin>
-        <groupId>org.apache.felix</groupId>
-        <artifactId>maven-bundle-plugin</artifactId>
-        <extensions>true</extensions>
-      </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-site-plugin</artifactId>

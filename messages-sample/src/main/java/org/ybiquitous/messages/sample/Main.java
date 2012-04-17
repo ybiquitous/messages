@@ -3,7 +3,7 @@ package org.ybiquitous.messages.sample;
 import java.util.Locale;
 
 import org.ybiquitous.messages.MessageKey;
-import org.ybiquitous.messages.MessageLocaleHolder;
+import org.ybiquitous.messages.ThreadLocalLocaleHolder;
 
 public class Main {
 
@@ -19,7 +19,7 @@ public class Main {
         p(MessageKey.of("test.key").get(Locale.JAPANESE, 1, "abc"));
 
         // use locale saved on thread-local
-        MessageLocaleHolder.set(Locale.JAPANESE);
+        ThreadLocalLocaleHolder.set(Locale.JAPANESE);
         p(MessageKey.of("test.key").get(1, "abc"));
     }
 

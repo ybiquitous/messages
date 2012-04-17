@@ -38,7 +38,7 @@ public final class MessageKey {
     }
 
     public String get(Object... args) throws MessageKeyNotFoundException {
-        return get(MessageLocaleHolder.get(), args);
+        return get(ThreadLocalLocaleHolder.get(), args);
     }
 
     public String get(Locale locale, Object... args) throws MessageKeyNotFoundException {
@@ -50,7 +50,7 @@ public final class MessageKey {
     }
 
     public String getOrElse(Object[] args, String defaultValue) {
-        return getOrElse(MessageLocaleHolder.get(), args, defaultValue);
+        return getOrElse(ThreadLocalLocaleHolder.get(), args, defaultValue);
     }
 
     public String getOrElse(Locale locale, String defaultValue) {

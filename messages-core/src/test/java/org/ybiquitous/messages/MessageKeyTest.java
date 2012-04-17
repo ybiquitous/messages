@@ -24,10 +24,10 @@ public class MessageKeyTest {
         MessageKey test_key = MessageKey.of("test.key");
         assertThat(test_key.get(1, 2, "三"), is("1 足す 2 は 三"));
 
-        MessageLocaleHolder.set(Locale.ENGLISH);
+        ThreadLocalLocaleHolder.set(Locale.ENGLISH);
         assertThat(test_key.get(1, 2, 3), is("1 plus 2 is 3"));
 
-        MessageLocaleHolder.reset();
+        ThreadLocalLocaleHolder.reset();
         assertThat(test_key.get(1, 2, "三"), is("1 足す 2 は 三"));
         assertThat(test_key.get(Locale.ENGLISH, 1, 2, 3), is("1 plus 2 is 3"));
     }
