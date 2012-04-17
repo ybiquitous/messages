@@ -3,7 +3,7 @@ package org.ybiquitous.messages;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class Log {
+public final class Log {
 
     private final Logger logger;
 
