@@ -1,12 +1,18 @@
 package org.ybiquitous.messages.generator;
 
+import static org.ybiquitous.messages.Constants.DEFAULT_CHARSET;
+import static org.ybiquitous.messages.Constants.DEFAULT_MESSAGE_RESOURCE;
+import static org.ybiquitous.messages.Constants.DEFAULT_MESSAGE_RESOURCE_EXTENSION;
+import static org.ybiquitous.messages.Utils.notNull;
+import static org.ybiquitous.messages.Utils.notNullOrElse;
+
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.text.SimpleDateFormat;
@@ -23,8 +29,7 @@ import java.util.regex.Pattern;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
-import org.ybiquitous.messages.Constants;
-import org.ybiquitous.messages.Utils;
+import org.ybiquitous.messages.Factory;
 
 public final class MessageKeyGenerator {
 
@@ -33,97 +38,52 @@ public final class MessageKeyGenerator {
         public String packageName;
         public String className;
         public String description;
-        public File messageResourceFile;
-        public Charset messageResourceFileEncoding;
-        public File templateFile;
-        public Charset templateFileEncoding;
+        public URL messageResource;
+        public Charset messageResourceEncoding;
+        public URL template;
+        public Charset templateEncoding;
         public File outputDirectory;
         public Charset outputEncoding;
         public List<Class<?>> importClasses;
 
-        private URL messageResourceUrl;
-        private URL templateUrl;
+        private static final Factory<URL> MESSAGE_RESOURCE_FACTORY = new Factory<URL>() {
+            @Override
+            public URL get() {
+                return Parameter.class.getResource('/' + DEFAULT_MESSAGE_RESOURCE);
+            }
+        };
+
+        private static final Factory<URL> TEMPLATE_FACTORY = new Factory<URL>() {
+            @Override
+            public URL get() {
+                return Parameter.class.getResource("MessageKeys.vm");
+            }
+        };
+
+        private static final Factory<File> OUTPUT_DIRECTORY_FACTORY = new Factory<File>() {
+            @Override
+            public File get() {
+                return new File(".");
+            }
+        };
 
         public void initialize() {
-            if (this.packageName == null) {
-                this.packageName = "message";
-            }
-            if (this.className == null) {
-                this.className = "MessageKeys";
-            }
-            if (this.description == null) {
-                this.description = "This is an auto generated class.";
-            }
-            if (this.messageResourceFile == null) {
-                this.messageResourceUrl = getClass().getResource(
-                        '/' + Constants.DEFAULT_MESSAGE_RESOURCE);
-            } else {
-                this.messageResourceUrl = toURL(this.messageResourceFile);
-            }
-            if (this.messageResourceFileEncoding == null) {
-                this.messageResourceFileEncoding = Constants.DEFAULT_CHARSET;
-            }
-            if (this.templateFile == null) {
-                this.templateUrl = getClass().getResource("MessageKeys.vm");
-            } else {
-                this.templateUrl = toURL(this.templateFile);
-            }
-            if (this.templateFileEncoding == null) {
-                this.templateFileEncoding = Constants.DEFAULT_CHARSET;
-            }
-            if (this.outputDirectory == null) {
-                this.outputDirectory = new File(".");
-            }
-            if (this.outputEncoding == null) {
-                this.outputEncoding = Constants.DEFAULT_CHARSET;
-            }
-            if (this.importClasses == null) {
-                this.importClasses = new ArrayList<Class<?>>();
-            }
-        }
-
-        public void validate() throws IllegalArgumentException {
-            final StringBuilder error = new StringBuilder();
-            final String separator = "\n";
-
-            String tempError = validateFile(this.messageResourceFile);
-            if (tempError != null) {
-                error.append(separator);
-                error.append(tempError);
-            }
-
-            tempError = validateFile(this.templateFile);
-            if (tempError != null) {
-                error.append(separator);
-                error.append(tempError);
-            }
-
-            if (error.length() > 0) {
-                throw new IllegalArgumentException(error.toString());
-            }
-        }
-
-        private static String validateFile(File file) {
-            if (file != null && !file.isFile()) {
-                return file + " not found";
-            }
-            return null;
-        }
-
-        private static URL toURL(File file) {
-            Utils.notNull(file, "file");
-            try {
-                return file.toURI().toURL();
-            } catch (MalformedURLException e) {
-                throw new IllegalArgumentException(file.toString(), e);
-            }
+            this.packageName = notNullOrElse(this.packageName, "message");
+            this.className = notNullOrElse(this.className, "MessageKeys");
+            this.description = notNullOrElse(this.description, "This is an auto generated class.");
+            this.messageResource = notNullOrElse(this.messageResource, MESSAGE_RESOURCE_FACTORY);
+            this.messageResourceEncoding = notNullOrElse(this.messageResourceEncoding, DEFAULT_CHARSET);
+            this.template = notNullOrElse(this.template, TEMPLATE_FACTORY);
+            this.templateEncoding = notNullOrElse(this.templateEncoding, DEFAULT_CHARSET);
+            this.outputDirectory = notNullOrElse(this.outputDirectory, OUTPUT_DIRECTORY_FACTORY);
+            this.outputEncoding = notNullOrElse(this.outputEncoding, DEFAULT_CHARSET);
+            this.importClasses = notNullOrElse(this.importClasses, Collections.<Class<?>> emptyList());
         }
     }
 
     public static File generate(Parameter parameter) {
-        Utils.notNull(parameter, "parameter");
+        notNull(parameter, "parameter");
         parameter.initialize();
-        parameter.validate();
 
         try {
             final Properties messageResource = loadMessageResource(parameter);
@@ -135,9 +95,10 @@ public final class MessageKeyGenerator {
 
     private static Properties loadMessageResource(Parameter parameter)
             throws IOException {
-        final InputStreamReader reader = new InputStreamReader(
-                parameter.messageResourceUrl.openStream(),
-                parameter.messageResourceFileEncoding);
+
+        final BufferedReader reader = new BufferedReader(new InputStreamReader(
+                parameter.messageResource.openStream(),
+                parameter.messageResourceEncoding));
         try {
             final Properties result = new Properties();
             result.load(reader);
@@ -167,18 +128,20 @@ public final class MessageKeyGenerator {
             Properties messageResource) throws Exception {
 
         final VelocityEngine engine = new VelocityEngine();
-        engine.init(new VelocityConfig(parameter.templateUrl));
+        engine.init(new VelocityConfig(parameter.template));
 
         final Template template = engine.getTemplate(
-                getLastSegment(parameter.templateUrl),
-                parameter.templateFileEncoding.name());
+                getLastSegment(parameter.template),
+                parameter.templateEncoding.name());
+
+        final VelocityContext context = buildContext(parameter, messageResource);
 
         final File outputFile = buildJavaFile(parameter);
         final BufferedWriter writer = new BufferedWriter(
                 new OutputStreamWriter(new FileOutputStream(outputFile),
                         parameter.outputEncoding));
         try {
-            template.merge(buildContext(parameter, messageResource), writer);
+            template.merge(context, writer);
         } finally {
             writer.close();
         }
@@ -202,8 +165,8 @@ public final class MessageKeyGenerator {
         context.put("importClasses", parameter.importClasses);
         context.put(
                 "messageResource",
-                getLastSegment(parameter.messageResourceUrl)
-                    .replace('.' + Constants.DEFAULT_MESSAGE_RESOURCE_EXTENSION, "")
+                getLastSegment(parameter.messageResource)
+                    .replace('.' + DEFAULT_MESSAGE_RESOURCE_EXTENSION, "")
                     .replaceFirst("/", ""));
         return context;
     }

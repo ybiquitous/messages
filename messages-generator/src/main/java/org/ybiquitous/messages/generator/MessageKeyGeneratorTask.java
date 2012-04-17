@@ -1,6 +1,8 @@
 package org.ybiquitous.messages.generator;
 
 import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,14 +17,25 @@ public final class MessageKeyGeneratorTask extends Task {
         return (encoding == null) ? null : Charset.forName(encoding);
     }
 
+    private static URL url(String resource) {
+        if (resource == null) {
+            return null;
+        }
+        try {
+            return new URL(resource);
+        } catch (MalformedURLException e) {
+            throw new BuildException(e);
+        }
+    }
+
     private String packageName;
     private String className;
     private String description;
-    private File messageResourceFile;
-    private String messageResourceFileEncoding;
-    private File templateFile;
-    private String templateFileEncoding;
-    private File outputDirectory;
+    private String messageResourceUrl;
+    private String messageResourceEncoding;
+    private String templateUrl;
+    private String templateEncoding;
+    private String outputDirectory;
     private String outputEncoding;
 
     private final List<ImportClass> importClasses = new ArrayList<ImportClass>();
@@ -33,11 +46,11 @@ public final class MessageKeyGeneratorTask extends Task {
         parameter.packageName = this.packageName;
         parameter.className = this.className;
         parameter.description = this.description;
-        parameter.messageResourceFile = this.messageResourceFile;
-        parameter.messageResourceFileEncoding = encoding(this.messageResourceFileEncoding);
-        parameter.templateFile = this.templateFile;
-        parameter.templateFileEncoding = encoding(this.templateFileEncoding);
-        parameter.outputDirectory = this.outputDirectory;
+        parameter.messageResource = url(this.messageResourceUrl);
+        parameter.messageResourceEncoding = encoding(this.messageResourceEncoding);
+        parameter.template = url(this.templateUrl);
+        parameter.templateEncoding = encoding(this.templateEncoding);
+        parameter.outputDirectory = new File(this.outputDirectory.toString());
         parameter.outputEncoding = encoding(this.outputEncoding);
         parameter.importClasses = convertImportClasses(this.importClasses);
 
@@ -57,24 +70,23 @@ public final class MessageKeyGeneratorTask extends Task {
         this.description = description;
     }
 
-    public void setMessageResourceFile(File messageResourceFile) {
-        this.messageResourceFile = messageResourceFile;
+    public void setMessageResourceUrl(String messageResourceUrl) {
+        this.messageResourceUrl = messageResourceUrl;
     }
 
-    public void setMessageResourceFileEncoding(
-            String messageResourceFileEncoding) {
-        this.messageResourceFileEncoding = messageResourceFileEncoding;
+    public void setMessageResourceEncoding(String messageResourceEncoding) {
+        this.messageResourceEncoding = messageResourceEncoding;
     }
 
-    public void setTemplateFile(File templateFile) {
-        this.templateFile = templateFile;
+    public void setTemplateUrl(String templateUrl) {
+        this.templateUrl = templateUrl;
     }
 
-    public void setTemplateFileEncoding(String templateFileEncoding) {
-        this.templateFileEncoding = templateFileEncoding;
+    public void setTemplateEncoding(String templateEncoding) {
+        this.templateEncoding = templateEncoding;
     }
 
-    public void setOutputDirectory(File outputDirectory) {
+    public void setOutputDirectory(String outputDirectory) {
         this.outputDirectory = outputDirectory;
     }
 

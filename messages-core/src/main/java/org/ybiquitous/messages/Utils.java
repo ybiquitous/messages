@@ -1,8 +1,14 @@
 package org.ybiquitous.messages;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 public final class Utils {
 
-    public static <T> T notNull(T obj, String name) throws NullPointerException {
+    public static @Nonnull <T> T notNull(
+            @Nullable T obj,
+            @Nullable String name) throws NullPointerException {
+
         if (obj == null) {
             if (name == null) {
                 throw new NullPointerException();
@@ -13,7 +19,21 @@ public final class Utils {
         return obj;
     }
 
-    public static boolean isEmpty(String str) {
+    public static @Nonnull <T> T notNullOrElse(
+            @Nullable T obj,
+            @Nonnull T defaultValue) throws NullPointerException {
+
+        return (obj != null) ? obj : notNull(defaultValue, "defaultValue");
+    }
+
+    public static @Nonnull <T> T notNullOrElse(
+            @Nullable T obj,
+            @Nonnull Factory<T> defaultValueFactory) throws NullPointerException {
+
+        return (obj != null) ? obj : notNull(defaultValueFactory, "defaultValueFactory").get();
+    }
+
+    public static boolean isEmpty(@Nullable String str) {
         return (str == null || str.isEmpty() || str.trim().isEmpty());
     }
 

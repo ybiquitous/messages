@@ -16,10 +16,10 @@
 			packageName="msg"
 			className="MsgKeys"
 			description="てすと"
-			messageResourceFile="${indir}/iso-8859-1.properties"
-			messageResourceFileEncoding="ISO-8859-1"
-			templateFile="${indir}/template.vm"
-			templateFileEncoding="UTF-8">
+			messageResourceUrl="file://${indir}/iso-8859-1.properties"
+			messageResourceEncoding="ISO-8859-1"
+			templateUrl="file://${indir}/template.vm"
+			templateEncoding="UTF-8">
 
 			<importClass name="java.util.List" />
 			<importClass name="java.util.Set" />
