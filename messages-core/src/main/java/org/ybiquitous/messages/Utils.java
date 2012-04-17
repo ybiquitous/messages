@@ -6,7 +6,7 @@ import javax.annotation.Nullable;
 public final class Utils {
 
     public static @Nonnull <T> T notNull(
-            @Nullable T obj,
+            @Nonnull T obj,
             @Nullable String name) throws NullPointerException {
 
         if (obj == null) {
