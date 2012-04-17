@@ -2,7 +2,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html>
         <head>
-          <title>org.ybiquitous.messages.scala.MessageKey</title>
+          <title>org.ybiquitous.messages.scala.MessageBuilder</title>
           <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
           
       <link type="text/css" media="screen" rel="stylesheet" href="../../../../lib/template.css" />
@@ -12,17 +12,17 @@
       <script type="text/javascript" src="../../../../lib/tools.tooltip.js"></script>
     
         </head>
-        <body class="value">
+        <body class="type">
       <div id="definition">
-        <a title="Go to companion" href="MessageKey.html"><img src="../../../../lib/object_to_class_big.png" /></a>
+        <img src="../../../../lib/trait_big.png" />
         <p id="owner"><a name="org" class="extype" href="../../../package.html">org</a>.<a name="org.ybiquitous" class="extype" href="../../package.html">ybiquitous</a>.<a name="org.ybiquitous.messages" class="extype" href="../package.html">messages</a>.<a name="org.ybiquitous.messages.scala" class="extype" href="package.html">scala</a></p>
-        <h1><a title="Go to companion" href="MessageKey.html">MessageKey</a></h1>
+        <h1>MessageBuilder</h1>
       </div>
 
       <h4 class="signature" id="signature">
-      <span class="kind">object</span>
+      <span class="kind">trait</span>
       <span class="symbol"> 
-        <span class="name">MessageKey</span>
+        <span class="name">MessageBuilder</span>
         
         <span class="result"> extends AnyRef</span>
       </span>
@@ -46,7 +46,7 @@
                 <span class="filtertype">Inherited</span>
                 <ol><li class="hideall out"><span>Hide All</span></li>
                 <li class="showall in"><span>Show all</span></li></ol>
-                <ol id="linearization"><li name="org.ybiquitous.messages.scala.MessageKey" class="in"><span>MessageKey</span></li><li name="scala.AnyRef" class="in"><span>AnyRef</span></li><li name="scala.Any" class="in"><span>Any</span></li></ol>
+                <ol id="linearization"><li name="org.ybiquitous.messages.scala.MessageBuilder" class="in"><span>MessageBuilder</span></li><li name="scala.AnyRef" class="in"><span>AnyRef</span></li><li name="scala.Any" class="in"><span>Any</span></li></ol>
               </div>
           <div id="visbl">
               <span class="filtertype">Visibility</span>
@@ -58,10 +58,30 @@
 
         
         
+        <div class="values members" id="values">
+              <h3>Abstract Value Members</h3>
+              <ol><li visbl="pub" name="org.ybiquitous.messages.scala.MessageBuilder#build" data-isabs="true">
+      <a id="build(Locale,String,Seq[Any]):String"></a>
+      <h4 class="signature">
+      <span class="kind">def</span>
+      <span class="symbol"> 
+        <span class="name">build</span>
         
+        <span class="params">(<span name="locale">locale: <span name="java.util.Locale" class="extype">Locale</span></span>, <span name="key">key: String</span>, <span name="args">args: Seq[<span name="scala.Any" class="extype">Any</span>]</span>)</span><span class="result">: String</span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>abstract </dd><dt>Annotations</dt><dd>
+                <span class="name">@throws</span><span class="args">(<span>
+      
+      <span name="classOf[MessageKeyNotFoundException]" class="defval">...</span>
+    </span>)</span>
+              
+        </dd></dl></div>
+    </li></ol>
+            </div>
 
         <div class="values members" id="values">
-              <h3>Value Members</h3>
+              <h3>Concrete Value Members</h3>
               <ol><li visbl="pub" name="scala.AnyRef#!=" data-isabs="false">
       <a id="!=(AnyRef):Boolean"></a>
       <h4 class="signature">
@@ -117,39 +137,6 @@
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>final </dd><dt>Definition Classes</dt><dd>Any</dd></dl></div>
-    </li><li visbl="pub" name="org.ybiquitous.messages.scala.MessageKey#apply" data-isabs="false">
-      <a id="apply(String,MessageBuilder):MessageKey"></a>
-      <h4 class="signature">
-      <span class="kind">def</span>
-      <span class="symbol"> 
-        <span class="name">apply</span>
-        
-        <span class="params">(<span name="key">key: String</span>, <span name="builder">builder: <a name="org.ybiquitous.messages.scala.MessageBuilder" class="extype" href="MessageBuilder.html">MessageBuilder</a></span>)</span><span class="result">: <a name="org.ybiquitous.messages.scala.MessageKey" class="extype" href="MessageKey.html">MessageKey</a></span>
-      </span>
-      </h4>
-      
-    </li><li visbl="pub" name="org.ybiquitous.messages.scala.MessageKey#apply" data-isabs="false">
-      <a id="apply(String,String):MessageKey"></a>
-      <h4 class="signature">
-      <span class="kind">def</span>
-      <span class="symbol"> 
-        <span class="name">apply</span>
-        
-        <span class="params">(<span name="key">key: String</span>, <span name="resource">resource: String</span>)</span><span class="result">: <a name="org.ybiquitous.messages.scala.MessageKey" class="extype" href="MessageKey.html">MessageKey</a></span>
-      </span>
-      </h4>
-      
-    </li><li visbl="pub" name="org.ybiquitous.messages.scala.MessageKey#apply" data-isabs="false">
-      <a id="apply(String):MessageKey"></a>
-      <h4 class="signature">
-      <span class="kind">def</span>
-      <span class="symbol"> 
-        <span class="name">apply</span>
-        
-        <span class="params">(<span name="key">key: String</span>)</span><span class="result">: <a name="org.ybiquitous.messages.scala.MessageKey" class="extype" href="MessageKey.html">MessageKey</a></span>
-      </span>
-      </h4>
-      
     </li><li visbl="pub" name="scala.Any#asInstanceOf" data-isabs="false">
       <a id="asInstanceOf[T0]:T0"></a>
       <h4 class="signature">
@@ -161,6 +148,17 @@
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>final </dd><dt>Definition Classes</dt><dd>Any</dd></dl></div>
+    </li><li visbl="pub" name="org.ybiquitous.messages.scala.MessageBuilder#buildOrElse" data-isabs="false">
+      <a id="buildOrElse(Locale,String,Seq[Any],String):String"></a>
+      <h4 class="signature">
+      <span class="kind">def</span>
+      <span class="symbol"> 
+        <span class="name">buildOrElse</span>
+        
+        <span class="params">(<span name="locale">locale: <span name="java.util.Locale" class="extype">Locale</span></span>, <span name="key">key: String</span>, <span name="args">args: Seq[<span name="scala.Any" class="extype">Any</span>]</span>, <span name="defaultValue">defaultValue: String</span>)</span><span class="result">: String</span>
+      </span>
+      </h4>
+      
     </li><li visbl="prt" name="scala.AnyRef#clone" data-isabs="false">
       <a id="clone():AnyRef"></a>
       <h4 class="signature">
