@@ -30,8 +30,11 @@ import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
 import org.ybiquitous.messages.Factory;
+import org.ybiquitous.messages.Log;
 
 public final class MessageKeyGenerator {
+
+    private static final Log log = new Log(MessageKeyGenerator.class);
 
     public static final class Parameter {
 
@@ -45,6 +48,7 @@ public final class MessageKeyGenerator {
         public File outputDirectory;
         public Charset outputEncoding;
         public List<Class<?>> importClasses;
+        public boolean verbose;
 
         private static final Factory<URL> MESSAGE_RESOURCE_FACTORY = new Factory<URL>() {
             @Override
@@ -79,15 +83,42 @@ public final class MessageKeyGenerator {
             this.outputEncoding = notNullOrElse(this.outputEncoding, DEFAULT_CHARSET);
             this.importClasses = notNullOrElse(this.importClasses, Collections.<Class<?>> emptyList());
         }
+
+        @Override
+        public String toString() {
+            final String ln = System.getProperty("line.separator");
+            final String eq = " = ";
+            final StringBuilder buf = new StringBuilder();
+            buf.append(super.toString()).append(" {").append(ln);
+            buf.append("packageName            ").append(eq).append(this.packageName).append(ln);
+            buf.append("className              ").append(eq).append(this.className).append(ln);
+            buf.append("description            ").append(eq).append(this.description).append(ln);
+            buf.append("messageResource        ").append(eq).append(this.messageResource).append(ln);
+            buf.append("messageResourceEncoding").append(eq).append(this.messageResourceEncoding).append(ln);
+            buf.append("template               ").append(eq).append(this.template).append(ln);
+            buf.append("templateEncoding       ").append(eq).append(this.templateEncoding).append(ln);
+            buf.append("outputDirectory        ").append(eq).append(this.outputDirectory).append(ln);
+            buf.append("outputEncoding         ").append(eq).append(this.outputEncoding).append(ln);
+            buf.append("importClasses          ").append(eq).append(this.importClasses).append(ln);
+            buf.append("verbose                ").append(eq).append(this.verbose).append(ln);
+            buf.append("}");
+            return buf.toString();
+        }
     }
 
     public static File generate(Parameter parameter) {
         notNull(parameter, "parameter");
         parameter.initialize();
 
+        if (parameter.verbose) log.info("parameter: %s", parameter);
+
         try {
             final Properties messageResource = loadMessageResource(parameter);
-            return renderTemplate(parameter, messageResource);
+            final File output = renderTemplate(parameter, messageResource);
+
+            if (parameter.verbose) log.info("generated: %s", output.getCanonicalPath());
+
+            return output;
         } catch (Exception e) {
             throw new IllegalStateException(e);
         }

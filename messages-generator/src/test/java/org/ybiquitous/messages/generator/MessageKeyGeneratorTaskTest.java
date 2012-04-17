@@ -16,11 +16,11 @@ public class MessageKeyGeneratorTaskTest extends BuildFileTest {
 
     public void testDefaultTarget() throws Exception {
         executeTarget("default");
-        assertLogContaining("generated " + this.basedir + "/target/ant-test/message/MessageKeys.java");
+        assertTrue(new File(this.basedir + "/target/ant-test/message/MessageKeys.java").isFile());
     }
 
     public void testCustomTarget() throws Exception {
         executeTarget("custom");
-        assertLogContaining("generated " + this.basedir + "/target/ant-test/msg/MsgKeys.java");
+        assertTrue(new File(this.basedir + "/target/ant-test/msg/MsgKeys.java").isFile());
     }
 }

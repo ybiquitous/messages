@@ -15,6 +15,7 @@ public class MessageKeyGeneratorTest {
     public void compileCheck() throws Exception {
         Parameter parameter = new Parameter();
         parameter.outputDirectory = new File("target/unittest");
+        parameter.verbose = true;
         File source = MessageKeyGenerator.generate(parameter);
         int rtn = ToolProvider.getSystemJavaCompiler().run(null, null, null,
                 source.getAbsolutePath());

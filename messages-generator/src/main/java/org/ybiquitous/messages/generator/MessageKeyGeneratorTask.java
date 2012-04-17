@@ -17,6 +17,10 @@ public final class MessageKeyGeneratorTask extends Task {
         return (encoding == null) ? null : Charset.forName(encoding);
     }
 
+    private static File file(String file) {
+        return (file == null) ? null : new File(file);
+    }
+
     private static URL url(String resource) {
         if (resource == null) {
             return null;
@@ -37,6 +41,7 @@ public final class MessageKeyGeneratorTask extends Task {
     private String templateEncoding;
     private String outputDirectory;
     private String outputEncoding;
+    private boolean verbose;
 
     private final List<ImportClass> importClasses = new ArrayList<ImportClass>();
 
@@ -50,12 +55,14 @@ public final class MessageKeyGeneratorTask extends Task {
         parameter.messageResourceEncoding = encoding(this.messageResourceEncoding);
         parameter.template = url(this.templateUrl);
         parameter.templateEncoding = encoding(this.templateEncoding);
-        parameter.outputDirectory = new File(this.outputDirectory.toString());
+        parameter.outputDirectory = file(this.outputDirectory);
         parameter.outputEncoding = encoding(this.outputEncoding);
         parameter.importClasses = convertImportClasses(this.importClasses);
+        parameter.verbose = this.verbose;
 
+        log("parameter: " + parameter);
         File generated = MessageKeyGenerator.generate(parameter);
-        log("generated " + generated);
+        log("generated: " + generated);
     }
 
     public void setPackageName(String packageName) {
@@ -92,6 +99,10 @@ public final class MessageKeyGeneratorTask extends Task {
 
     public void setOutputEncoding(String outputEncoding) {
         this.outputEncoding = outputEncoding;
+    }
+
+    public void setVerbose(boolean verbose) {
+        this.verbose = verbose;
     }
 
     public ImportClass createImportClass() {

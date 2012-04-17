@@ -14,15 +14,15 @@ final class VelocityConfig extends Properties {
 
     private static final long serialVersionUID = 1L;
 
-    private static final boolean DEBUG = false;
-
+    private static final boolean verbose = false;
+    
     public VelocityConfig(URL url) {
         set(RESOURCE_LOADER, "url");
         set("url.resource.loader.class", URLResourceLoader.class);
         set("url.resource.loader.root", getParent(url));
         set("url.resource.loader.cache", false);
         set("url.resource.loader.modificationCheckInterval", 0);
-        if (DEBUG) {
+        if (verbose) {
             set(RUNTIME_LOG_LOGSYSTEM_CLASS, SystemLogChute.class);
             set(SystemLogChute.RUNTIME_LOG_LEVEL_KEY, "trace");
             set(SystemLogChute.RUNTIME_LOG_SYSTEM_ERR_LEVEL_KEY, "trace");
