@@ -1,27 +1,34 @@
 package org.ybiquitous.messages;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public final class Log {
 
     private final Logger logger;
 
     public Log(Class<?> clazz) {
-        this.logger = Logger.getLogger(clazz.getName());
+        this.logger = LoggerFactory.getLogger(clazz.getName());
     }
 
-    public void info(String msg, Object... args) {
-        log(Level.INFO, msg, args);
+    public void error(Object msgOrFmt, Object... args) {
+        this.logger.error(buildMsg(msgOrFmt, args));
     }
 
-    public void debug(String msg, Object... args) {
-        log(Level.FINEST, msg, args);
+    public void warn(Object msgOrFmt, Object... args) {
+        this.logger.warn(buildMsg(msgOrFmt, args));
     }
 
-    private void log(Level level, String msg, Object... args) {
-        if (this.logger.isLoggable(level)) {
-            this.logger.log(level, (args.length == 0) ? msg : String.format(msg, args));
-        }
+    public void info(Object msgOrFmt, Object... args) {
+        this.logger.info(buildMsg(msgOrFmt, args));
+    }
+
+    public void debug(Object msgOrFmt, Object... args) {
+        this.logger.debug(buildMsg(msgOrFmt, args));
+    }
+
+    private static String buildMsg(Object msgOrFmt, Object... args) {
+        final String str = String.valueOf(msgOrFmt);
+        return (args.length == 0) ? str : String.format(str, args);
     }
 }

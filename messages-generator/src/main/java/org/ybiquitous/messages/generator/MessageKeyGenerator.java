@@ -89,19 +89,18 @@ public final class MessageKeyGenerator {
             final String ln = System.getProperty("line.separator");
             final String eq = " = ";
             final StringBuilder buf = new StringBuilder();
-            buf.append(super.toString()).append(" {").append(ln);
-            buf.append("packageName            ").append(eq).append(this.packageName).append(ln);
-            buf.append("className              ").append(eq).append(this.className).append(ln);
-            buf.append("description            ").append(eq).append(this.description).append(ln);
-            buf.append("messageResource        ").append(eq).append(this.messageResource).append(ln);
-            buf.append("messageResourceEncoding").append(eq).append(this.messageResourceEncoding).append(ln);
-            buf.append("template               ").append(eq).append(this.template).append(ln);
-            buf.append("templateEncoding       ").append(eq).append(this.templateEncoding).append(ln);
-            buf.append("outputDirectory        ").append(eq).append(this.outputDirectory).append(ln);
-            buf.append("outputEncoding         ").append(eq).append(this.outputEncoding).append(ln);
-            buf.append("importClasses          ").append(eq).append(this.importClasses).append(ln);
-            buf.append("verbose                ").append(eq).append(this.verbose).append(ln);
-            buf.append("}");
+            buf.append(super.toString()).append(":").append(ln);
+            buf.append("  packageName            ").append(eq).append(this.packageName).append(ln);
+            buf.append("  className              ").append(eq).append(this.className).append(ln);
+            buf.append("  description            ").append(eq).append(this.description).append(ln);
+            buf.append("  messageResource        ").append(eq).append(this.messageResource).append(ln);
+            buf.append("  messageResourceEncoding").append(eq).append(this.messageResourceEncoding).append(ln);
+            buf.append("  template               ").append(eq).append(this.template).append(ln);
+            buf.append("  templateEncoding       ").append(eq).append(this.templateEncoding).append(ln);
+            buf.append("  outputDirectory        ").append(eq).append(this.outputDirectory).append(ln);
+            buf.append("  outputEncoding         ").append(eq).append(this.outputEncoding).append(ln);
+            buf.append("  importClasses          ").append(eq).append(this.importClasses).append(ln);
+            buf.append("  verbose                ").append(eq).append(this.verbose);
             return buf.toString();
         }
     }
@@ -110,13 +109,13 @@ public final class MessageKeyGenerator {
         notNull(parameter, "parameter");
         parameter.initialize();
 
-        if (parameter.verbose) log.info("parameter: %s", parameter);
+        if (parameter.verbose) log.debug(parameter);
 
         try {
             final Properties messageResource = loadMessageResource(parameter);
             final File output = renderTemplate(parameter, messageResource);
 
-            if (parameter.verbose) log.info("generated: %s", output.getCanonicalPath());
+            if (parameter.verbose) log.debug("generated: %s", output.getCanonicalPath());
 
             return output;
         } catch (Exception e) {

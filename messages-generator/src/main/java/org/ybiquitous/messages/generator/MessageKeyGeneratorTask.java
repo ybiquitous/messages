@@ -60,9 +60,7 @@ public final class MessageKeyGeneratorTask extends Task {
         parameter.importClasses = convertImportClasses(this.importClasses);
         parameter.verbose = this.verbose;
 
-        log("parameter: " + parameter);
-        File generated = MessageKeyGenerator.generate(parameter);
-        log("generated: " + generated);
+        MessageKeyGenerator.generate(parameter);
     }
 
     public void setPackageName(String packageName) {

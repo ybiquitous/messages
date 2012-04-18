@@ -66,7 +66,7 @@
             <configuration>
               <target>
                 <taskdef name="generate" classname="org.ybiquitous.messages.generator.MessageKeyGeneratorTask" />
-                <generate outputDirectory="${gen.src.dir}" messageResourceUrl="file://${basedir}/src/main/resources/messages.properties" />
+                <generate outputDirectory="${gen.src.dir}" messageResourceUrl="file://${basedir}/src/main/resources/messages.properties" verbose="true" />
               </target>
             </configuration>
           </execution>
