@@ -16,10 +16,10 @@ public class Main {
         p(MessageKey.of("test.key", "messages").get(1, "abc"));
 
         // specify locale
-        p(MessageKey.of("test.key").get(Locale.JAPANESE, 1, "abc"));
+        p(MessageKey.of("test.key").get(Locale.ENGLISH, 1, "abc"));
 
         // use locale saved on thread-local
-        ThreadLocalLocaleHolder.set(Locale.JAPANESE);
+        ThreadLocalLocaleHolder.set(Locale.ENGLISH);
         p(MessageKey.of("test.key").get(1, "abc"));
     }
 

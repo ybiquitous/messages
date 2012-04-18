@@ -4,10 +4,10 @@ Example
 messages.properties (on classpath root, UTF-8 encoded)
 
 ```
-test.key = {0} and {1}
+test.key = {0} & {1}
 ```
 
-messages_ja.properties (on classpath root, UTF-8 encoded)
+messages_en.properties (on classpath root, UTF-8 encoded)
 
 ```
 test.key = {0} と {1}
@@ -23,15 +23,15 @@ import org.ybiquitous.messages.MessageLocaleHolder;
 Locale.setDefault(Locale.FRENCH);
 
 // default locale
-MessageKey.of("test.key").get(1, "abc"); //=> 1 and abc
-MessageKey.of("test.key", "messages").get(1, "abc"); //=> 1 and abc
+MessageKey.of("test.key").get(1, "abc"); //=> 1 & abc
+MessageKey.of("test.key", "messages").get(1, "abc"); //=> 1 & abc
 
 // specify locale
-MessageKey.of("test.key").get(Locale.JAPANESE, 1, "abc"); //=> 1 と abc
+MessageKey.of("test.key").get(Locale.ENGLISH, 1, "abc"); //=> 1 and abc
 
 // use locale saved on thread-local
-MessageLocaleHolder.set(Locale.JAPANESE);
-MessageKey.of("test.key").get(1, "abc"); //=> 1 と abc
+ThreadLocalLocaleHolder.set(Locale.ENGLISH);
+MessageKey.of("test.key").get(1, "abc"); //=> 1 and abc
 ```
 
 Scala
