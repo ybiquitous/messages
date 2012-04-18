@@ -86,6 +86,7 @@
               <reports>
                 <report>dependencies</report>
                 <report>index</report>
+                <report>summary</report>
               </reports>
             </plugin>
             <plugin>

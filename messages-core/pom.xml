@@ -23,14 +23,6 @@
       <artifactId>slf4j-api</artifactId>
       <optional>true</optional>
     </dependency>
-<!-- 
-    <dependency>
-      <groupId>org.slf4j</groupId>
-      <artifactId>slf4j-simple</artifactId>
-      <version>${slf4j.version}</version>
-      <scope>test</scope>
-    </dependency>
- -->
   </dependencies>
 
   <build>
@@ -51,6 +43,7 @@
               <reports>
                 <report>dependencies</report>
                 <report>index</report>
+                <report>summary</report>
               </reports>
             </plugin>
           </reportPlugins>
