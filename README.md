@@ -49,7 +49,7 @@ Required
 ========
 
 - Java 1.6+
-- Scala 2.9.1+
+- Scala 2.9+
 
 Homepage
 ========
