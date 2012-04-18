@@ -7,7 +7,7 @@
   <artifactId>messages-parent</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <packaging>pom</packaging>
-  <name>Simple Message Library Parent</name>
+  <name>Simple Message Library</name>
   <url>http://ybiquitous.github.com/messages/</url>
   <inceptionYear>2012</inceptionYear>
 
