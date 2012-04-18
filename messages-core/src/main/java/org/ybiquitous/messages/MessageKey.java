@@ -8,8 +8,10 @@ public final class MessageKey {
 
     private static final Object[] EMPTY_ARGS = {};
 
+    private static final MessageBuilder DEFAULT_BUILDER = DefaultMessageBuilder.create(Constants.DEFAULT_MESSAGE_RESOURCE_NAME);
+
     public static MessageKey of(String key) {
-        return of(key, Constants.DEFAULT_MESSAGE_RESOURCE_NAME);
+        return of(key, DEFAULT_BUILDER);
     }
 
     public static MessageKey of(String key, String resourceName) {
@@ -30,7 +32,7 @@ public final class MessageKey {
 
     private final String _key;
 
-    private transient final MessageBuilder _builder;
+    private final MessageBuilder _builder;
 
     private MessageKey(String key, MessageBuilder builder) {
         this._key = Utils.notNull(key, "key");
@@ -61,28 +63,12 @@ public final class MessageKey {
         return this._builder.buildOrElse(locale, this._key, args, defaultValue);
     }
 
-    @Override
-    public String toString() {
+    public String key() {
         return this._key;
     }
 
     @Override
-    public int hashCode() {
-        return this._key.hashCode();
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        MessageKey that = (MessageKey) obj;
-        return this._key.equals(that._key);
+    public String toString() {
+        return this._key + ", " + this._builder;
     }
 }

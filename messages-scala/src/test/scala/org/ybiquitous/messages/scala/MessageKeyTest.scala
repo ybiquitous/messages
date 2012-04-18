@@ -8,15 +8,10 @@ import org.junit.Assert.assertThat
 
 class MessageKeyTest {
 
-  @Test def equality() {
-    val key = MessageKey("test.key")
-    val key2 = MessageKey("test.key")
-    assertThat(key, is(key2))
-  }
-
   @Test def simple() {
     val key = MessageKey("test.key")
     assertThat(key.get(1, 2, "3"), is("1 足す 2 は 3"))
+    assertThat(key.key, is("test.key"))
   }
 
   @Test def locale() {

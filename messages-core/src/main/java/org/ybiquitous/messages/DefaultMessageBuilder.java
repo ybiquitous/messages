@@ -44,7 +44,7 @@ class DefaultMessageBuilder implements MessageBuilder {
         int i = 0;
         for (Object arg : args) {
             if (arg instanceof MessageKey) {
-                newArgs[i++] = _build(locale, ((MessageKey) arg).toString());
+                newArgs[i++] = _build(locale, ((MessageKey) arg).key());
             }
         }
         return _build(locale, key, newArgs);
