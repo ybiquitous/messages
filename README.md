@@ -10,7 +10,7 @@ test.key = {0} & {1}
 messages_en.properties (on classpath root, UTF-8 encoded)
 
 ```
-test.key = {0} と {1}
+test.key = {0} and {1}
 ```
 
 Java
