@@ -216,53 +216,6 @@
         <altDeploymentRepository>${deploy.type}-repo::default::file://${deploy.path}/${deploy.type}</altDeploymentRepository>
       </properties>
     </profile>
-    <profile>
-      <id>deploy-site</id>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-antrun-plugin</artifactId>
-            <configuration>
-              <target>
-                <property name="tmpdir" value="${java.io.tmpdir}/${user.name}/deploy-site" />
-                <property name="sitedir" value="${tmpdir}/messages" />
-
-                <taskdef name="if" classname="net.sf.antcontrib.logic.IfTask" />
-                <if>
-                  <equals arg1="${project.parent.groupId}" arg2="${project.groupId}" />
-                  <then>
-                    <copy todir="${sitedir}/${project.artifactId}">
-                      <fileset dir="${project.reporting.outputDirectory}" />
-                    </copy>
-                  </then>
-                  <else>
-                    <delete dir="${tmpdir}" />
-                    <mkdir dir="${tmpdir}" />
-                    <exec executable="git" dir="${tmpdir}">
-                      <arg line="clone git@github.com:ybiquitous/messages.git -b gh-pages" />
-                    </exec>
-                    <delete includeemptydirs="true">
-                      <fileset dir="${sitedir}" includes="**/*" defaultexcludes="true" />
-                    </delete>
-                    <copy todir="${sitedir}">
-                      <fileset dir="${project.reporting.outputDirectory}" />
-                    </copy>
-                  </else>
-                </if>
-              </target>
-            </configuration>
-            <dependencies>
-              <dependency>
-                <groupId>ant-contrib</groupId>
-                <artifactId>ant-contrib</artifactId>
-                <version>20020829</version>
-              </dependency>
-            </dependencies>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
   </profiles>
 
 </project>

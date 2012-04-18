@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project name="maven-antrun-" default="deploy-site">
+  <target name="deploy-site">
+    <property name="tmpdir" value="${java.io.tmpdir}/${user.name}/deploy-site"/>
+    <property name="sitedir" value="${tmpdir}/messages"/>
+    <delete dir="${tmpdir}"/>
+    <mkdir dir="${tmpdir}"/>
+    <exec dir="${tmpdir}" executable="git">
+      <arg line="clone git@github.com:ybiquitous/messages.git -b gh-pages"/>
+    </exec>
+    <delete includeemptydirs="true">
+      <fileset dir="${sitedir}" includes="**/*" defaultexcludes="true"/>
+    </delete>
+    <copy todir="${sitedir}">
+      <fileset dir="${basedir}/../target/site"/>
+    </copy>
+    <copy todir="${sitedir}/messages-core">
+      <fileset dir="${basedir}/../messages-core/target/site"/>
+    </copy>
+    <copy todir="${sitedir}/messages-generator">
+      <fileset dir="${basedir}/../messages-generator/target/site"/>
+    </copy>
+    <copy todir="${sitedir}/messages-scala">
+      <fileset dir="${basedir}/../messages-scala/target/site"/>
+    </copy>
+    <copy todir="${sitedir}/messages-sample">
+      <fileset dir="${basedir}/../messages-sample/target/site"/>
+    </copy>
+    <exec dir="${sitedir}" executable="git">
+      <arg line="status"/>
+    </exec>
+    <echo>### NEXT STEP: "cd ${sitedir}" ###</echo>
+  </target>
+</project>
