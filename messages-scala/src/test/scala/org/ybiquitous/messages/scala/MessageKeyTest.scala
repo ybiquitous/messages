@@ -3,10 +3,21 @@ package org.ybiquitous.messages.scala
 import java.util.Locale
 
 import org.hamcrest.CoreMatchers._
-import org.junit.Test
+import org.junit.{ Test, Before, After }
 import org.junit.Assert.assertThat
 
 class MessageKeyTest {
+
+  private var saveLocale: Locale = _
+
+  @Before def before() {
+    saveLocale = Locale.getDefault
+    Locale.setDefault(Locale.JAPAN)
+  }
+
+  @After def after() {
+    Locale.setDefault(saveLocale)
+  }
 
   @Test def simple() {
     val key = MessageKey("test.key")
